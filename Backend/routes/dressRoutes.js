@@ -48,9 +48,7 @@ dressRoute.post("/dress/add", upload.array("media"), async (req, res) => {
       type,
       description,
       category,
-      images: mediaUrls.filter(
-        (url) => url.endsWith(".jpg") || url.endsWith(".png")
-      ),
+      images: mediaUrls,
       size: size.split(","),
       color,
       stock,
