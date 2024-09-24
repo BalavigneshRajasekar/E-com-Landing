@@ -65,4 +65,29 @@ dressRoute.post("/dress/add", upload.array("media"), async (req, res) => {
   }
 });
 
+// Endpoint to get all dress data from DB
+dressRoute.get("/dress/get", async (req, res) => {
+  try {
+    const dresses = await dress.find({});
+    res.json(dresses);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", json: err.message });
+  }
+});
+
+// Endpoint to get dress data by id from DB
+
+dressRoute.get("/dress/get/:id", async (req, res) => {
+  try {
+    const dresses = await dress.findById(req.params.id);
+    if (!dresses) return res.status(404).json({ message: "Dress not found" });
+    res.json(dresses);
+  } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ message: "Dress not found" });
+    }
+    res.status(500).json({ message: "Server Error", json: err.message });
+  }
+});
+
 module.exports = dressRoute;
