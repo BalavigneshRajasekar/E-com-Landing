@@ -3,15 +3,21 @@ import React, { useContext, useEffect } from "react";
 import { Segmented } from "antd";
 import { productContext } from "../Context";
 import axios, { Axios } from "axios";
+import { Checkbox } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Rating from "@mui/material/Rating";
 
 function Products() {
   const { products, setProducts, filter, setFilter } =
     useContext(productContext);
+  const navigate = useNavigate();
 
+  // Initial page load this useffect call the function for data fetch
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  //Function to fetch products
   const fetchProducts = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api1/dress/get");
@@ -23,6 +29,7 @@ function Products() {
     }
   };
 
+  //Handle Filters
   const handleFilter = (value) => {
     switch (value) {
       case "All":
@@ -37,6 +44,11 @@ function Products() {
 
         break;
       case "Women":
+        setFilter(
+          products.filter((value) => {
+            return value.type == "women";
+          })
+        );
         break;
       case "Electronics":
         break;
@@ -46,6 +58,25 @@ function Products() {
         setFilter();
         break;
     }
+  };
+
+  //Handle checkbox for sizes
+  const Check = (e) => {
+    console.log(e.target.value);
+  };
+
+  // Handle single view products
+  const singleView = (e, id) => {
+    if (
+      e.target.tagName == "BUTTON" ||
+      e.target.tagName == "svg" ||
+      e.target.tagName == "INPUT" ||
+      e.target.tagName == "SELECT"
+    ) {
+      return;
+    }
+    console.log(id);
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -59,25 +90,75 @@ function Products() {
           />
         </div>
       </div>
-      <div className="row">
+      <div className="d-flex flex-wrap justify-content-center justify-content-lg-between gap-3 mt-5">
         {filter &&
           filter.map((product) => (
-            <div key={product._id} className=" col-md-12 col-lg-6">
+            <div
+              key={product._id}
+              className="card-div"
+              onClick={(e) => singleView(e, product._id)}
+            >
               <div className="card ">
                 <div className="card-img">
                   <div className="p-3">
-                    <img src={product.image} style={{ width: "200px" }}></img>
+                    <img
+                      src={product.image}
+                      style={{ width: "200px", height: "200px" }}
+                    ></img>
                   </div>
                 </div>
                 <div className="card-title">{product.name}</div>
-                <div className="card-subtitle">
-                  Product description. Lorem ipsum dolor sit amet, consectetur
-                  adipisicing elit.
+                <div className="fw-bold d-flex justify-content-between">
+                  <div>
+                    {product.size.map((sizes, index) => (
+                      <>
+                        {sizes}
+                        <Checkbox
+                          key={index}
+                          value={sizes}
+                          onClick={(e) => Check(e)}
+                        />
+                      </>
+                    ))}
+                  </div>
+                  <select
+                    style={{
+                      width: "50px",
+                      outline: "none",
+                      border: "1px solid grey",
+                      height: "30px",
+                      borderRadius: "5px",
+                      marginTop: "10px",
+                      color: "orange",
+                      fontWeight: 700,
+                      textAlign: "center",
+                    }}
+                    defaultValue="1"
+                  >
+                    {Array.from(
+                      { length: product.stock },
+                      (_, index1) => index1 + 1
+                    ).map((quan, index2) => (
+                      <option value={quan} key={index2}>
+                        {quan}
+                      </option>
+                    ))}
+                    ;
+                  </select>
                 </div>
 
+                <div>
+                  <Rating
+                    value={product.rating}
+                    readOnly
+                    size="small"
+                    color="primary"
+                  />
+                </div>
                 <div className="card-footer">
                   <div className="card-price">
-                    <span>$</span> 123.45
+                    <span>$</span>
+                    {product.price}
                   </div>
                   <button className="card-btn">
                     <svg
