@@ -54,7 +54,7 @@ function Nav() {
                 textDecoration: "none",
               }}
             >
-              <img src="public/icon.png" style={{ width: "60px" }}></img>
+              <img src="icon.png" style={{ width: "60px" }}></img>
               SHOPIFY
             </Typography>
 
@@ -109,7 +109,7 @@ function Nav() {
                 textDecoration: "none",
               }}
             >
-              <img src="public/icon.png" style={{ width: "60px" }}></img>
+              <img src="icon.png" style={{ width: "60px" }}></img>
               SHOPIFY
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>

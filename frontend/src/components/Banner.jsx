@@ -6,15 +6,15 @@ import "react-slideshow-image/dist/styles.css";
 
 const fadeImages = [
   {
-    url: "public/offer1.jpg",
+    url: "offer1.jpg",
     caption: "Caption 1",
   },
   {
-    url: "public/offer2.jpg",
+    url: "offer2.jpg",
     caption: "Caption 2",
   },
   {
-    url: "public/offer3.jpg",
+    url: "offer3.jpg",
     caption: "Caption 3",
   },
 ];
