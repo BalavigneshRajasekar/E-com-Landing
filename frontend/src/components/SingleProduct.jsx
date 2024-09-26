@@ -28,7 +28,7 @@ function SingleProduct() {
   const fetchSingleProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api1/dress/get/${id}`
+        `https://e-com-landing.onrender.com/api1/dress/get/${id}`
       );
       setSingleProduct(response.data);
       console.log(response.data);

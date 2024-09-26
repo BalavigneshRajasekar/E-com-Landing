@@ -21,7 +21,9 @@ function Products() {
   //Function to fetch products
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api1/dress/get");
+      const response = await axios.get(
+        "https://e-com-landing.onrender.com/api1/dress/get"
+      );
       console.log(response);
       setProducts(response.data);
       setFilter(response.data);
