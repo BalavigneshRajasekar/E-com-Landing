@@ -6,6 +6,7 @@ import axios, { Axios } from "axios";
 import { Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import { Empty } from "antd";
 
 function Products() {
   const { products, setProducts, filter, setFilter } =
@@ -51,6 +52,11 @@ function Products() {
         );
         break;
       case "Electronics":
+        setFilter(
+          products.filter((value) => {
+            return value.type == "electronics";
+          })
+        );
         break;
       case "Home Appliances":
         setFilter(
@@ -95,8 +101,8 @@ function Products() {
           />
         </div>
       </div>
-      <div className="d-flex flex-wrap justify-content-center justify-content-lg-between gap-3 mt-5">
-        {filter &&
+      <div className="d-flex flex-wrap justify-content-center  gap-3 mt-5">
+        {filter.length > 0 ? (
           filter.map((product) => (
             <div
               key={product._id}
@@ -179,7 +185,10 @@ function Products() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <Empty description="No products found" />
+        )}
       </div>
     </div>
   );
