@@ -9,6 +9,7 @@ export const productContext = createContext();
 
 const States = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [value, setValue] = useState();
   const [singleProduct, setSingleProduct] = useState({});
   const [filter, setFilter] = useState([]);
 
@@ -21,6 +22,8 @@ const States = ({ children }) => {
         setFilter,
         singleProduct,
         setSingleProduct,
+        value,
+        setValue,
       }}
     >
       {children}
