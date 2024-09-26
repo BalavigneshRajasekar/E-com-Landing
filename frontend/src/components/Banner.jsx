@@ -24,6 +24,7 @@ const fadeImages = [
 function Banner() {
   const { filter, setFilter, products } = useContext(productContext);
 
+  //Handle search parameter
   const handleSearch = (value) => {
     if (value.target.value == "") {
       console.log("hello");
@@ -36,7 +37,6 @@ function Banner() {
         .includes(value.target.value.toLowerCase());
     });
     setFilter(filtered);
-    console.log(products);
   };
   return (
     <div>
