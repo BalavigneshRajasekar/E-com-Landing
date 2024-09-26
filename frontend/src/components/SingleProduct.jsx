@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router";
+import axios, { Axios } from "axios";
 
 import { productContext } from "../Context";
 import { Checkbox } from "@mui/material";
@@ -21,23 +22,30 @@ function SingleProduct() {
     useContext(productContext);
 
   useEffect(() => {
-    const data = products.find((prod) => {
-      return prod._id === id;
-    });
-
-    setSingleProduct({ ...data });
-    console.log(singleProduct);
+    fetchSingleProduct();
   }, []);
+
+  const fetchSingleProduct = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api1/dress/get/${id}`
+      );
+      setSingleProduct(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const Check = () => {};
   return (
     <>
       <Container>
         <Paper elevation={4}>
-          <div className="d-md-flex">
+          <div className="d-flex gap-4 flex-column flex-md-row p-3">
             <div className="">
               <img
                 src={singleProduct.image}
-                style={{ width: "300px", height: "400px" }}
+                style={{ width: "100%", height: "400px" }}
                 className="p-3"
               ></img>
             </div>
@@ -45,14 +53,17 @@ function SingleProduct() {
               <Typography variant="h3" className="fw-lighter p-3">
                 {singleProduct.name}
               </Typography>
-              <Divider textAlign="left">LEFT</Divider>
-              <Rating
-                value={singleProduct.rating}
-                readOnly
-                size="medium"
-                color="primary"
-                className="ps-3"
-              />
+              <Divider textAlign="left">
+                {" "}
+                <Rating
+                  value={singleProduct.rating}
+                  readOnly
+                  size="medium"
+                  color="primary"
+                  className="ps-3"
+                />
+              </Divider>
+
               <Typography className="p-2" variant="h6">
                 Description : {singleProduct.description}
               </Typography>
@@ -63,23 +74,27 @@ function SingleProduct() {
                 MRP incl. of all taxes
               </Typography>
               <Typography className="p-2" variant="h6" sx={{ color: "grey" }}>
-                Color : <span>{singleProduct.color}</span>
+                Color :{" "}
+                <span style={{ color: singleProduct.color }}>
+                  {singleProduct.color}
+                </span>
               </Typography>
               <Typography className="p-2" variant="h6" sx={{ color: "black" }}>
                 Size :
               </Typography>
-              {/* <div className="ms-5">
-                {singleProduct.size.map((sizes, index) => (
-                  <>
-                    {sizes}
-                    <Checkbox
-                      key={index}
-                      value={sizes}
-                      onClick={(e) => Check(e)}
-                    />
-                  </>
-                ))}
-              </div> */}
+              <div className="ms-5">
+                {singleProduct.size &&
+                  singleProduct.size.map((sizes, index) => (
+                    <>
+                      {sizes}
+                      <Checkbox
+                        key={index}
+                        value={sizes}
+                        onClick={(e) => Check(e)}
+                      />
+                    </>
+                  ))}
+              </div>
               <Typography variant="h6">Quantity :</Typography>
               <div className="">
                 <select

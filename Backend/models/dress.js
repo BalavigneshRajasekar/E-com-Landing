@@ -12,7 +12,7 @@ const dress = new mongoose.Schema({
   type: {
     type: "string",
     required: true,
-    enum: ["men", "women"],
+    enum: ["men", "women", "electronics", "home appliance"],
   },
   image: [String],
   description: String,
