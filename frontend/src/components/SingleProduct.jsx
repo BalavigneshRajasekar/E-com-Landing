@@ -79,6 +79,9 @@ function SingleProduct() {
                   {singleProduct.color}
                 </span>
               </Typography>
+              <Typography className="p-2" variant="h6" sx={{ color: "grey" }}>
+                Category : {singleProduct.category}
+              </Typography>
               <Typography className="p-2" variant="h6" sx={{ color: "black" }}>
                 Size :
               </Typography>

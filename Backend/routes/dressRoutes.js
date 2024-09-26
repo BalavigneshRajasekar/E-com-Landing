@@ -59,7 +59,7 @@ dressRoute.post("/dress/add", upload.array("media"), async (req, res) => {
     await newDress.save();
     res
       .status(201)
-      .send({ message: "Dress added successfully", json: newDress });
+      .send({ message: "Product added successfully", json: newDress });
   } catch (err) {
     res.status(500).json({ message: "Server Error", json: err.message });
   }

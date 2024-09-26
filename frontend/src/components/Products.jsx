@@ -53,6 +53,11 @@ function Products() {
       case "Electronics":
         break;
       case "Home Appliances":
+        setFilter(
+          products.filter((value) => {
+            return value.type == "home appliance";
+          })
+        );
         break;
       default:
         setFilter();
